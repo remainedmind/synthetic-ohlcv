@@ -23,6 +23,7 @@ from synthetic_ohlcv.generator import (
 )
 from synthetic_ohlcv.io import SaveResult, save_synthetic_ohlcv
 
+__version__ = "0.1.2"
 __all__ = [
     "CONFIG_CONTROL_PATHS",
     "KLINE_COLUMNS",
@@ -36,6 +37,7 @@ __all__ = [
     "SaveResult",
     "SyntheticKlinesConfig",
     "VolatilityClusterConfig",
+    "__version__",
     "control_schema",
     "control_schema_payload",
     "make_synthetic_ohlcv",
