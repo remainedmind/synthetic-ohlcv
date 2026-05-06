@@ -1,0 +1,78 @@
+[build-system]
+requires = ["hatchling>=1.28"]
+build-backend = "hatchling.build"
+
+[project]
+name = "synthetic-klines"
+version = "0.1.0"
+description = "Interactive synthetic OHLCV kline generator for learnable trading experiments."
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = ["ohlcv", "synthetic-data", "trading", "klines", "fastapi"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: FastAPI",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Testing",
+]
+dependencies = [
+    "fastapi>=0.136.1",
+    "numpy>=2.3.0,<3",
+    "polars>=1.40.1",
+    "pydantic>=2.13.3",
+    "uvicorn>=0.46.0",
+]
+
+[project.scripts]
+synthetic-klines = "synthetic_klines.server:main"
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.15.12",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/README.md",
+    "/src",
+    "/tests",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/synthetic_klines"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "RUF"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = [
+    "--cov=synthetic_klines",
+    "--cov-branch",
+    "--cov-report=term-missing",
+    "--cov-fail-under=100",
+]
+
+[tool.coverage.report]
+exclude_also = [
+    "if __name__ == .__main__.:",
+]
