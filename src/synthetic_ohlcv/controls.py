@@ -2,7 +2,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from synthetic_klines.config import CycleComponent, SyntheticKlinesConfig
+from synthetic_ohlcv.config import CycleComponent, SyntheticKlinesConfig
 
 ControlInput = Literal["checkbox", "number", "select", "slider", "text"]
 
@@ -84,7 +84,7 @@ def control_schema(config: SyntheticKlinesConfig | None = None) -> list[ControlG
                     "Dataset name",
                     "text",
                     "Output file stem. Use letters, numbers, dots, dashes, or underscores.",
-                    "synthetic_klines",
+                    "synthetic_ohlcv",
                     non_slider_reason="Text identifier, not a numeric range.",
                 ),
                 _control(

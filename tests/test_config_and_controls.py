@@ -1,8 +1,8 @@
 import pytest
 
-from synthetic_klines import CONFIG_CONTROL_PATHS, SyntheticKlinesConfig
-from synthetic_klines.config import CycleComponent
-from synthetic_klines.controls import control_schema, control_schema_payload
+from synthetic_ohlcv import CONFIG_CONTROL_PATHS, SyntheticKlinesConfig
+from synthetic_ohlcv.config import CycleComponent
+from synthetic_ohlcv.controls import control_schema, control_schema_payload
 
 
 def test_config_rejects_extreme_linear_bias() -> None:

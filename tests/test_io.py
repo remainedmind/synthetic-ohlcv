@@ -4,13 +4,13 @@ from pathlib import Path
 import polars as pl
 import pytest
 
-from synthetic_klines import KLINE_COLUMNS, SyntheticKlinesConfig, save_synthetic_klines
-from synthetic_klines.generator import make_synthetic_klines_with_metadata
-from synthetic_klines.io import save_frame, validate_dataset_name
+from synthetic_ohlcv import KLINE_COLUMNS, SyntheticKlinesConfig, save_synthetic_ohlcv
+from synthetic_ohlcv.generator import make_synthetic_ohlcv_with_metadata
+from synthetic_ohlcv.io import save_frame, validate_dataset_name
 
 
-def test_save_synthetic_klines_writes_parquet_csv_and_metadata(tmp_path: Path) -> None:
-    result = save_synthetic_klines(
+def test_save_synthetic_ohlcv_writes_parquet_csv_and_metadata(tmp_path: Path) -> None:
+    result = save_synthetic_ohlcv(
         config=SyntheticKlinesConfig(rows=80, seed=5),
         dataset_name="demo_dataset",
         output_dir=tmp_path,
@@ -26,7 +26,7 @@ def test_save_synthetic_klines_writes_parquet_csv_and_metadata(tmp_path: Path) -
 
 
 def test_save_frame_can_reject_overwrite(tmp_path: Path) -> None:
-    frame, metadata = make_synthetic_klines_with_metadata(SyntheticKlinesConfig(rows=16))
+    frame, metadata = make_synthetic_ohlcv_with_metadata(SyntheticKlinesConfig(rows=16))
 
     save_frame(frame, metadata, "existing", tmp_path, overwrite=False)
 

@@ -3,7 +3,7 @@ from typing import Any
 import numpy as np
 import polars as pl
 
-from synthetic_klines.config import (
+from synthetic_ohlcv.config import (
     CycleComponent,
     SyntheticKlinesConfig,
 )
@@ -12,12 +12,12 @@ KLINE_COLUMNS = ("timestamp", "open", "high", "low", "close", "volume", "turnove
 EPSILON = 1e-12
 
 
-def make_synthetic_klines(config: SyntheticKlinesConfig) -> pl.DataFrame:
-    frame, _ = make_synthetic_klines_with_metadata(config)
+def make_synthetic_ohlcv(config: SyntheticKlinesConfig) -> pl.DataFrame:
+    frame, _ = make_synthetic_ohlcv_with_metadata(config)
     return frame
 
 
-def make_synthetic_klines_with_metadata(
+def make_synthetic_ohlcv_with_metadata(
     config: SyntheticKlinesConfig,
 ) -> tuple[pl.DataFrame, dict[str, object]]:
     rng = np.random.default_rng(config.seed)

@@ -21,9 +21,9 @@ uv run synthetic-klines --port 8110
 ## Python API
 
 ```python
-from synthetic_klines import SyntheticKlinesConfig, make_synthetic_klines
+from synthetic_ohlcv import SyntheticKlinesConfig, make_synthetic_ohlcv
 
-frame = make_synthetic_klines(SyntheticKlinesConfig(rows=4_000, seed=43))
+frame = make_synthetic_ohlcv(SyntheticKlinesConfig(rows=4_000, seed=43))
 ```
 
 Generated datasets contain exactly:

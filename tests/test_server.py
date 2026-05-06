@@ -5,9 +5,9 @@ import polars as pl
 import pytest
 from fastapi.testclient import TestClient
 
-import synthetic_klines.server as server
-from synthetic_klines import KLINE_COLUMNS
-from synthetic_klines.server import DEFAULT_PORT, create_app, main, run_server
+import synthetic_ohlcv.server as server
+from synthetic_ohlcv import KLINE_COLUMNS
+from synthetic_ohlcv.server import DEFAULT_PORT, create_app, main, run_server
 
 
 def test_index_default_config_and_control_schema_routes() -> None:
@@ -20,7 +20,7 @@ def test_index_default_config_and_control_schema_routes() -> None:
     assert index.status_code == 200
     assert "Synthetic Klines Generator" in index.text
     assert "field-hint-wrap" in index.text
-    app_js = resources.files("synthetic_klines").joinpath("templates/app.js").read_text()
+    app_js = resources.files("synthetic_ohlcv").joinpath("templates/app.js").read_text()
     assert 'tooltip.role = "tooltip";' in app_js
     assert "aria-expanded" in app_js
     assert defaults.status_code == 200
@@ -51,7 +51,7 @@ def test_preview_endpoint_maps_generator_value_errors(monkeypatch: pytest.Monkey
     def fail_generation(_config: object) -> object:
         raise ValueError("bad generated data")
 
-    monkeypatch.setattr(server, "make_synthetic_klines_with_metadata", fail_generation)
+    monkeypatch.setattr(server, "make_synthetic_ohlcv_with_metadata", fail_generation)
     client = TestClient(create_app())
 
     response = client.post("/api/preview", json={"config": {"rows": 16}})

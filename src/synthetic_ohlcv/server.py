@@ -8,10 +8,10 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from synthetic_klines.config import DEFAULT_EXPORT_DIR, SyntheticKlinesConfig
-from synthetic_klines.controls import control_schema_payload
-from synthetic_klines.generator import frame_to_records, make_synthetic_klines_with_metadata
-from synthetic_klines.io import save_synthetic_klines
+from synthetic_ohlcv.config import DEFAULT_EXPORT_DIR, SyntheticKlinesConfig
+from synthetic_ohlcv.controls import control_schema_payload
+from synthetic_ohlcv.generator import frame_to_records, make_synthetic_ohlcv_with_metadata
+from synthetic_ohlcv.io import save_synthetic_ohlcv
 
 TEMPLATES_DIR = Path(__file__).resolve().parent / "templates"
 DEFAULT_HOST = "127.0.0.1"
@@ -24,7 +24,7 @@ class PreviewRequest(BaseModel):
 
 class SaveRequest(BaseModel):
     config: SyntheticKlinesConfig = Field(default_factory=SyntheticKlinesConfig)
-    dataset_name: str = "synthetic_klines"
+    dataset_name: str = "synthetic_ohlcv"
     output_dir: Path = DEFAULT_EXPORT_DIR
     overwrite: bool = True
 
@@ -52,7 +52,7 @@ def create_app() -> FastAPI:
     @app.post("/api/preview")
     async def preview(request: PreviewRequest) -> JSONResponse:
         try:
-            frame, metadata = make_synthetic_klines_with_metadata(request.config)
+            frame, metadata = make_synthetic_ohlcv_with_metadata(request.config)
         except ValueError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
         return JSONResponse(
@@ -65,7 +65,7 @@ def create_app() -> FastAPI:
     @app.post("/api/save")
     async def save(request: SaveRequest) -> JSONResponse:
         try:
-            result = save_synthetic_klines(
+            result = save_synthetic_ohlcv(
                 config=request.config,
                 dataset_name=request.dataset_name,
                 output_dir=request.output_dir,

@@ -1,7 +1,7 @@
 import numpy as np
 import polars as pl
 
-from synthetic_klines import (
+from synthetic_ohlcv import (
     KLINE_COLUMNS,
     CycleComponent,
     JumpShockConfig,
@@ -9,10 +9,10 @@ from synthetic_klines import (
     RegimeShiftConfig,
     SyntheticKlinesConfig,
     VolatilityClusterConfig,
-    make_synthetic_klines,
-    make_synthetic_klines_with_metadata,
+    make_synthetic_ohlcv,
+    make_synthetic_ohlcv_with_metadata,
 )
-from synthetic_klines.generator import _safe_stat
+from synthetic_ohlcv.generator import _safe_stat
 
 
 def assert_valid_klines(frame: pl.DataFrame, rows: int) -> None:
@@ -38,17 +38,17 @@ def assert_valid_klines(frame: pl.DataFrame, rows: int) -> None:
     assert np.isfinite(frame.select(KLINE_COLUMNS[1:]).to_numpy()).all()
 
 
-def test_make_synthetic_klines_returns_valid_ohlcv_schema() -> None:
-    frame = make_synthetic_klines(SyntheticKlinesConfig(rows=300, seed=7))
+def test_make_synthetic_ohlcv_returns_valid_ohlcv_schema() -> None:
+    frame = make_synthetic_ohlcv(SyntheticKlinesConfig(rows=300, seed=7))
 
     assert_valid_klines(frame, rows=300)
 
 
-def test_make_synthetic_klines_is_reproducible_for_same_seed() -> None:
+def test_make_synthetic_ohlcv_is_reproducible_for_same_seed() -> None:
     config = SyntheticKlinesConfig(rows=128, seed=123)
 
-    left = make_synthetic_klines(config)
-    right = make_synthetic_klines(config)
+    left = make_synthetic_ohlcv(config)
+    right = make_synthetic_ohlcv(config)
 
     assert left.equals(right)
 
@@ -73,7 +73,7 @@ def test_zeroed_components_can_generate_flat_benchmark() -> None:
         mean_reversion=MeanReversionConfig(enabled=False, strength=0.0),
     )
 
-    frame, metadata = make_synthetic_klines_with_metadata(config)
+    frame, metadata = make_synthetic_ohlcv_with_metadata(config)
 
     assert np.allclose(frame["open"].to_numpy(), 500.0)
     assert np.allclose(frame["high"].to_numpy(), 500.0)
@@ -97,7 +97,7 @@ def test_multiple_components_generate_finite_market_like_data() -> None:
         mean_reversion=MeanReversionConfig(enabled=True, strength=0.01, window=72),
     )
 
-    frame, metadata = make_synthetic_klines_with_metadata(config)
+    frame, metadata = make_synthetic_ohlcv_with_metadata(config)
 
     assert_valid_klines(frame, rows=600)
     assert len(metadata["components"]["cycles"]) == 2
@@ -106,7 +106,7 @@ def test_multiple_components_generate_finite_market_like_data() -> None:
 
 
 def test_single_regime_shift_branch_is_supported() -> None:
-    frame = make_synthetic_klines(
+    frame = make_synthetic_ohlcv(
         SyntheticKlinesConfig(
             rows=96,
             seed=3,
@@ -130,7 +130,7 @@ def test_enabled_zero_strength_components_have_no_effect() -> None:
         mean_reversion=MeanReversionConfig(enabled=True, strength=0.0),
     )
 
-    _, metadata = make_synthetic_klines_with_metadata(config)
+    _, metadata = make_synthetic_ohlcv_with_metadata(config)
 
     assert metadata["components"]["returns"]["jump_shocks"]["sum"] == 0.0
     assert metadata["components"]["returns"]["mean_reversion"]["sum"] == 0.0

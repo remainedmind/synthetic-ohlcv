@@ -6,8 +6,8 @@ from typing import Any
 
 import polars as pl
 
-from synthetic_klines.config import DEFAULT_EXPORT_DIR, SyntheticKlinesConfig
-from synthetic_klines.generator import KLINE_COLUMNS, make_synthetic_klines_with_metadata
+from synthetic_ohlcv.config import DEFAULT_EXPORT_DIR, SyntheticKlinesConfig
+from synthetic_ohlcv.generator import KLINE_COLUMNS, make_synthetic_ohlcv_with_metadata
 
 DATASET_NAME_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$")
 
@@ -30,14 +30,14 @@ class SaveResult:
         }
 
 
-def save_synthetic_klines(
+def save_synthetic_ohlcv(
     config: SyntheticKlinesConfig,
     dataset_name: str,
     output_dir: Path | str = DEFAULT_EXPORT_DIR,
     overwrite: bool = True,
 ) -> SaveResult:
     resolved_name = validate_dataset_name(dataset_name)
-    frame, metadata = make_synthetic_klines_with_metadata(config)
+    frame, metadata = make_synthetic_ohlcv_with_metadata(config)
     return save_frame(
         frame=frame,
         metadata=metadata,

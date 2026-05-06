@@ -1,6 +1,6 @@
 """Independent synthetic OHLCV kline generator and local preview app."""
 
-from synthetic_klines.config import (
+from synthetic_ohlcv.config import (
     CycleComponent,
     JumpShockConfig,
     MeanReversionConfig,
@@ -8,7 +8,7 @@ from synthetic_klines.config import (
     SyntheticKlinesConfig,
     VolatilityClusterConfig,
 )
-from synthetic_klines.controls import (
+from synthetic_ohlcv.controls import (
     CONFIG_CONTROL_PATHS,
     ControlGroup,
     ControlOption,
@@ -16,12 +16,12 @@ from synthetic_klines.controls import (
     control_schema,
     control_schema_payload,
 )
-from synthetic_klines.generator import (
+from synthetic_ohlcv.generator import (
     KLINE_COLUMNS,
-    make_synthetic_klines,
-    make_synthetic_klines_with_metadata,
+    make_synthetic_ohlcv,
+    make_synthetic_ohlcv_with_metadata,
 )
-from synthetic_klines.io import SaveResult, save_synthetic_klines
+from synthetic_ohlcv.io import SaveResult, save_synthetic_ohlcv
 
 __all__ = [
     "CONFIG_CONTROL_PATHS",
@@ -38,7 +38,7 @@ __all__ = [
     "VolatilityClusterConfig",
     "control_schema",
     "control_schema_payload",
-    "make_synthetic_klines",
-    "make_synthetic_klines_with_metadata",
-    "save_synthetic_klines",
+    "make_synthetic_ohlcv",
+    "make_synthetic_ohlcv_with_metadata",
+    "save_synthetic_ohlcv",
 ]
