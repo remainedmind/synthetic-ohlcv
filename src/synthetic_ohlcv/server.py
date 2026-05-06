@@ -34,7 +34,7 @@ def create_app() -> FastAPI:
     app.mount(
         "/assets",
         StaticFiles(directory=TEMPLATES_DIR, html=False),
-        name="synthetic-klines-assets",
+        name="synthetic-ohlcv-assets",
     )
 
     @app.get("/", response_class=HTMLResponse)

@@ -3,7 +3,7 @@ requires = ["hatchling>=1.28"]
 build-backend = "hatchling.build"
 
 [project]
-name = "synthetic-klines"
+name = "synthetic-ohlcv"
 version = "0.1.0"
 description = "Interactive synthetic OHLCV kline generator for learnable trading experiments."
 readme = "README.md"
@@ -30,7 +30,7 @@ dependencies = [
 ]
 
 [project.scripts]
-synthetic-klines = "synthetic_ohlcv.server:main"
+synthetic-ohlcv = "synthetic_ohlcv.server:main"
 
 [dependency-groups]
 dev = [
