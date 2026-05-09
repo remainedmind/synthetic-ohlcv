@@ -23,7 +23,7 @@ from synthetic_ohlcv.generator import (
 )
 from synthetic_ohlcv.io import SaveResult, save_synthetic_ohlcv
 
-__version__ = "0.1.3"
+__version__ = "0.2.0"
 __all__ = [
     "CONFIG_CONTROL_PATHS",
     "KLINE_COLUMNS",

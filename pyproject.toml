@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "synthetic-ohlcv"
-version = "0.1.3"
+version = "0.2.0"
 description = "Interactive synthetic OHLCV kline generator for learnable trading experiments."
 readme = "README.md"
 requires-python = ">=3.11"
 keywords = ["ohlcv", "synthetic-data", "trading", "klines", "fastapi"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Framework :: FastAPI",
     "Intended Audience :: Developers",
     "Intended Audience :: Financial and Insurance Industry",
